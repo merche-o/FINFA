@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Player behavior
+
 public class HeroStateMachine : MonoBehaviour {
 
 	public BaseHero hero;

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//IA Behavior (state machine)
+// Should make a special file that contains the IA action logic (targetting, skill selecting, etc...)
+
 public class EnemyStateMachine : MonoBehaviour {
 
 	public BaseEnemy enemy;
@@ -64,6 +67,7 @@ public class EnemyStateMachine : MonoBehaviour {
 		myAttack.attackerName = enemy.name;
 		myAttack.attackerType = "Enemy";
 		myAttack.attackerGameObject = this.gameObject;
+		//Add IA about choosing target
 		myAttack.targetGameObject = BSM.HerosInBattle [Random.Range (0, BSM.HerosInBattle.Count)];
 		BSM.CollectAction (myAttack);
 	}

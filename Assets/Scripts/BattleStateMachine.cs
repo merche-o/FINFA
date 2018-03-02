@@ -2,6 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum POSITION
+{
+	FRONT_L,
+	FRONT_M,
+	FRONT_R,
+	BACK_L,
+	BACK_M,
+	BACK_R
+}
+
 public class BattleStateMachine : MonoBehaviour {
 
 	public enum PerformAction
@@ -49,10 +59,11 @@ public class BattleStateMachine : MonoBehaviour {
 		case (PerformAction.TAKEACTION):
 			GameObject perfomer = performList [0].attackerGameObject;
 			if (performList [0].attackerType == "Enemy") {
+
 				performList [0].attackerGameObject.GetComponent<EnemyStateMachine> ().target = performList [0].targetGameObject;
 				performList [0].attackerGameObject.GetComponent<EnemyStateMachine> ().currentState = EnemyStateMachine.PerformAction.ACTION;
 			} else if (performList [0].attackerType == "Hero") {
-				
+				// getFrom interface the target 
 			}
 			battleStates = PerformAction.PERFORMACTION;
 			break;

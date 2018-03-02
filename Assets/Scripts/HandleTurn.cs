@@ -9,7 +9,9 @@ public class HandleTurn {
 	public string attackerType;
 	public GameObject attackerGameObject;
 	public string targetName;
+	public string targetType;
 	public GameObject targetGameObject;
+	public Skills skill;
 
 
 
