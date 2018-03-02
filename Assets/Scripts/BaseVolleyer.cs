@@ -1,18 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public enum  ClassType {
+	DEF ,
+	BLK,
+	ATK ,
+	PASS ,
+	REC ,
+	SMH ,
+	SNK // should change name though
+}
+
 [System.Serializable]
 public class BaseVolleyer {
-	public enum  Type {
-		DEF = "Defender",
-		BLK = "Blocker",
-		ATK = "Attacker",
-		PASS = "Passer",
-		REC = "Receptionner",
-		SMH = "Smasher",
-		SNK = "Snicky" // should change name though
-	}
-
+	
 
 
 	public string name;
@@ -23,7 +25,8 @@ public class BaseVolleyer {
 	public POSITION cur_pos;
 
 	public string description;
-	public Type type;
+	public ClassType type;
+	public string className;
 	public List<Stats> baseStats;
 	public List<Stats> currentStats;
 	public List<Alterations> currentAlterations;
