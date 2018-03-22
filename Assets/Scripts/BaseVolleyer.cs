@@ -31,17 +31,69 @@ public class BaseVolleyer : MonoBehaviour {
 	public List<Stats> currentStats;
 	public List<Alterations> currentAlterations;
 	public List<Alterations> permAlterations;
+	public List<Skills> moveList;
 	public GameObject gameObj;
+	public SkillTarget targetType;
+
+	public BaseVolleyer (string _name, ClassType _type, POSITION _pos) {
+		Vname = _name;
+		type = _type;
+		cur_pos = _pos;
+		setBasicSkill ();
+	}
+
+	void setBasicSkill() {
+		SkillFactory sFact = new SkillFactory ();
+
+		moveList.Add (sFact.createPassSkill());
+		moveList.Add (sFact.createServiceSkill());
+		moveList.Add (sFact.createShotSkill());
+	}
+
 	protected virtual void OnMouseOver(){
 
 		this.displayStatsWindow ();
+		if(Input.GetMouseButtonDown(0)){
+			// Display hero information clicked on the hero panel
+			BattleStateMachine bsm = GameObject.Find ("BattleManager").GetComponent<BattleStateMachine>();
+			HandlePanels panel = GameObject.Find ("Canvas").GetComponent<HandlePanels>();
+			panel.updateTargetPanel (this);
+
+			if (isClickable(bsm)) {
+				selectTarget (bsm);
+			}
+
+		}
 
 	}
 
 	void displayStatsWindow(){
-		Debug.Log("Hover on Vollayer");
+		//Debug.Log("Should display volleyer information description");
 
 		
 	// put a UI window that display name, currentHP, currentMP and stats of the Volleyer
+	}
+
+	bool isClickable (BattleStateMachine bsm) {
+		if (bsm.battleStates == BattleStateMachine.PerformAction.HUMAN && bsm.currentTurn.skill && bsm.currentTurn.skill.sTarget == targetType) {
+		
+			foreach (POSITION pos in bsm.currentTurn.skill.posTarget) {
+				if (pos == cur_pos)
+					return true;
+			}
+		}
+		return false;
+	}
+
+	void selectTarget(BattleStateMachine bsm) {
+
+		bsm.currentTurn.targetGameObject = this;
+		bsm.currentTurn.targetName = this.Vname;
+		bsm.currentTurn.targetType = this.type;
+		Debug.Log("Should launch skill");
+		//should change battlestate 
+		bsm.battleStates = BattleStateMachine.PerformAction.TAKEACTION;
+
+
 	}
 }

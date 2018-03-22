@@ -5,18 +5,14 @@ using UnityEngine;
 [System.Serializable]
 public class BaseHero : BaseVolleyer{
 
-	 void OnMouseOver(){
+	public BaseHero(string _name, ClassType _type, POSITION _pos) : base ( _name,  _type, _pos) {
+		targetType = SkillTarget.TEAM;
+	}
+
+	override protected void OnMouseOver(){
 		base.OnMouseOver ();
 		if(Input.GetMouseButtonDown(0)){
-			// Display hero information clicked on the hero panel
-			Debug.Log("click on Hero");
-			BattleStateMachine bsm = GameObject.Find ("BattleManager").GetComponent<BattleStateMachine>();
-			if (bsm.battleStates == BattleStateMachine.PerformAction.HUMAN) {
-				bsm.currentTurn.attackerGameObject = this.gameObj;
-				bsm.currentTurn.attackerName = this.Vname;
-				bsm.currentTurn.attackerType = this.type;
-			}
-
+			Debug.Log("click on Ally");
 		}
 	}
 }

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class HeroStateMachine : BaseHero {
 
+
 	//public BaseHero hero;
 
 	public enum PerformAction {
@@ -17,7 +18,8 @@ public class HeroStateMachine : BaseHero {
 		ACTION,
 		DEAD
 	}
-
+	public HeroStateMachine(string _name, ClassType _type, POSITION _pos) : base (_name, _type,  _pos) {
+	}
 	public PerformAction currentState;
 	private float currentCD = 0f;
 	private float maxCD = 2f;

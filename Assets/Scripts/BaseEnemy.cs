@@ -5,7 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class BaseEnemy : BaseVolleyer{
 
-
+	public BaseEnemy(string _name, ClassType _type, POSITION _pos) : base (_name, _type,  _pos) {
+		targetType = SkillTarget.ENEMY;
+	}
 
 	public enum DIFFICULTY {
 		COMMON,
@@ -15,17 +17,9 @@ public class BaseEnemy : BaseVolleyer{
 	}
 	public DIFFICULTY diff;
 
-	void OnMouseOver(){
+	override protected void OnMouseOver(){
 		base.OnMouseOver ();
 		if(Input.GetMouseButtonDown(0)){
-			// Display Enemy information clicked on the enemy panel
-			// put selectThe enemyclicked as a targer if it's player turn
-			BattleStateMachine bsm = GameObject.Find ("BattleManager").GetComponent<BattleStateMachine>();
-			if (bsm.battleStates == BattleStateMachine.PerformAction.HUMAN) {
-				bsm.currentTurn.targetGameObject = this.gameObj;
-				bsm.currentTurn.targetName = this.Vname;
-				bsm.currentTurn.targetType = this.type;
-			}
 			Debug.Log("click on enemy");
 		}
 	}

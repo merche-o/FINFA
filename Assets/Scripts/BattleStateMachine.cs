@@ -45,9 +45,11 @@ public class BattleStateMachine : MonoBehaviour {
 	void Start () {
 
 		battleStates = PerformAction.HUMAN;
+
 	//	EnemiesInBattle.AddRange (GameObject.FindGameObjectsWithTag ("Enemy"));
 	//	HerosInBattle.AddRange (GameObject.FindGameObjectsWithTag ("Hero"));
 		currentTurn = new HandleTurn ();
+		setAttacker ();
 
 	}
 	
@@ -61,7 +63,9 @@ public class BattleStateMachine : MonoBehaviour {
 			}
 			break;
 		case (PerformAction.TAKEACTION):
-			BaseVolleyer perfomer = performList [0].attackerGameObject;
+			finishTurn ();
+			//BaseVolleyer perfomer = performList [0].attackerGameObject;
+
 			/*if (performList [0].attackerType == "Enemy") {
 
 				performList [0].attackerGameObject.GetComponent<EnemyStateMachine> ().target = performList [0].targetGameObject;
@@ -70,10 +74,13 @@ public class BattleStateMachine : MonoBehaviour {
 				// getFrom interface the target 
 				//getFrom interface the skill
 			}*/
+
+
 			battleStates = PerformAction.PERFORMACTION;
 			break;
 		case (PerformAction.PERFORMACTION):
-			battleStates = PerformAction.WAIT;
+			finishTurn ();
+			battleStates = PerformAction.HUMAN;
 			break;
 		}
 		
@@ -81,5 +88,27 @@ public class BattleStateMachine : MonoBehaviour {
 
 	public void CollectAction(HandleTurn input) {
 		performList.Add (input);
+	}
+
+	public void launchSkill() {
+		Debug.Log("Launch skill !");
+
+	}
+
+	public  void finishTurn() {
+		currentTurn.attackerGameObject = null;
+		currentTurn.targetGameObject = null;
+		currentTurn.skill = null;
+		currentTurn.targetName = null;
+		currentTurn.attackerName = null;
+	}
+
+	void setAttacker() {
+		currentTurn.attackerGameObject = (GameObject.FindGameObjectsWithTag ("Hero") [0]).GetComponent<HeroStateMachine>();
+		currentTurn.attackerName = currentTurn.attackerGameObject.Vname;
+		currentTurn.attackerType = currentTurn.attackerType;
+		HandlePanels panel = GameObject.Find ("Canvas").GetComponent<HandlePanels>();
+		panel.updateHeroPanel (currentTurn.attackerGameObject);
+
 	}
 }

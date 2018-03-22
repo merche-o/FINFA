@@ -26,6 +26,8 @@ public class EnemyStateMachine : BaseEnemy {
 	private bool actionStarted = false;
 	public GameObject target;
 
+	public EnemyStateMachine(string _name, ClassType _type, POSITION _pos) : base (_name, _type,  _pos) {
+	}
 	// Use this for initialization
 	void Start () {
 		currentState = PerformAction.PROCESSING;
@@ -63,12 +65,12 @@ public class EnemyStateMachine : BaseEnemy {
 
 	void  ChooseAction () {
 		HandleTurn myAttack = new HandleTurn ();
-		myAttack.attackerName = this.Vname;
+	//	myAttack.attackerName = this.Vname;
 		//myAttack.attackerType = "Enemy";
-		myAttack.attackerGameObject = this;
+	//	myAttack.attackerGameObject = this;
 		//Add IA about choosing target
-		myAttack.targetGameObject = BSM.HerosInBattle [Random.Range (0, BSM.HerosInBattle.Count)];
-		BSM.CollectAction (myAttack);
+	//	myAttack.targetGameObject = BSM.HerosInBattle [Random.Range (0, BSM.HerosInBattle.Count)];
+	//	BSM.CollectAction (myAttack);
 	}
 	private IEnumerator TimeForAction  () {
 	
