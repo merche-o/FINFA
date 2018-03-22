@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 //Player behavior
 
-public class HeroStateMachine : MonoBehaviour {
+public class HeroStateMachine : BaseHero {
 
-	public BaseHero hero;
+	//public BaseHero hero;
 
 	public enum PerformAction {
 		PROCESSING,
@@ -54,7 +54,9 @@ public class HeroStateMachine : MonoBehaviour {
 		}
 		currentCD = currentCD + Time.deltaTime;
 		float calcCD = currentCD / maxCD;
-		progressBar.transform.localScale = new Vector2(Mathf.Clamp(calcCD,0,1),progressBar.transform.transform.localScale.y);
+	//	progressBar.transform.localScale = new Vector2(Mathf.Clamp(calcCD,0,1),progressBar.transform.transform.localScale.y);
 
 	}
+
+
 }

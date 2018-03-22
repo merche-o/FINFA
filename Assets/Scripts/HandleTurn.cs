@@ -5,12 +5,14 @@ using UnityEngine;
 [System.Serializable]
 public class HandleTurn {
 
+
+
 	public string attackerName;
-	public string attackerType;
-	public GameObject attackerGameObject;
+	public ClassType attackerType;
+	public BaseVolleyer attackerGameObject;
 	public string targetName;
-	public string targetType;
-	public GameObject targetGameObject;
+	public ClassType targetType;
+	public BaseVolleyer targetGameObject;
 	public Skills skill;
 
 

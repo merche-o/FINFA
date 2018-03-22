@@ -13,11 +13,11 @@ public enum  ClassType {
 }
 
 [System.Serializable]
-public class BaseVolleyer {
+public class BaseVolleyer : MonoBehaviour {
 	
 
 
-	public string name;
+	public string Vname;
 	public float baseHP;
 	public float currentHP;
 	public float baseMP;
@@ -31,4 +31,17 @@ public class BaseVolleyer {
 	public List<Stats> currentStats;
 	public List<Alterations> currentAlterations;
 	public List<Alterations> permAlterations;
+	public GameObject gameObj;
+	protected virtual void OnMouseOver(){
+
+		this.displayStatsWindow ();
+
+	}
+
+	void displayStatsWindow(){
+		Debug.Log("Hover on Vollayer");
+
+		
+	// put a UI window that display name, currentHP, currentMP and stats of the Volleyer
+	}
 }

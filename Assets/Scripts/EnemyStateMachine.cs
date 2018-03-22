@@ -5,9 +5,8 @@ using UnityEngine;
 //IA Behavior (state machine)
 // Should make a special file that contains the IA action logic (targetting, skill selecting, etc...)
 
-public class EnemyStateMachine : MonoBehaviour {
+public class EnemyStateMachine : BaseEnemy {
 
-	public BaseEnemy enemy;
 	private BattleStateMachine BSM;
 	public enum PerformAction {
 		PROCESSING,
@@ -64,9 +63,9 @@ public class EnemyStateMachine : MonoBehaviour {
 
 	void  ChooseAction () {
 		HandleTurn myAttack = new HandleTurn ();
-		myAttack.attackerName = enemy.name;
-		myAttack.attackerType = "Enemy";
-		myAttack.attackerGameObject = this.gameObject;
+		myAttack.attackerName = this.Vname;
+		//myAttack.attackerType = "Enemy";
+		myAttack.attackerGameObject = this;
 		//Add IA about choosing target
 		myAttack.targetGameObject = BSM.HerosInBattle [Random.Range (0, BSM.HerosInBattle.Count)];
 		BSM.CollectAction (myAttack);

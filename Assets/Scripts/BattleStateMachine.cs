@@ -16,16 +16,20 @@ public class BattleStateMachine : MonoBehaviour {
 
 	public enum PerformAction
 	{
+		HUMAN,
+		IA,
 		WAIT,
 		TAKEACTION,
 		PERFORMACTION
 	};
 
+
+	public HandleTurn currentTurn;
 	public PerformAction battleStates;
 	public List<HandleTurn> performList = new List<HandleTurn> ();
 
-	public List<GameObject> HerosInBattle = new List<GameObject> ();
-	public List<GameObject> EnemiesInBattle = new List<GameObject> ();
+	public List<BaseVolleyer> HerosInBattle = new List<BaseVolleyer> ();
+	public List<BaseVolleyer> EnemiesInBattle = new List<BaseVolleyer> ();
 
 	public enum HeroGUI {
 		ACTIVATE,
@@ -40,10 +44,10 @@ public class BattleStateMachine : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		battleStates = PerformAction.WAIT;
-		EnemiesInBattle.AddRange (GameObject.FindGameObjectsWithTag ("Enemy"));
-		HerosInBattle.AddRange (GameObject.FindGameObjectsWithTag ("Hero"));
-
+		battleStates = PerformAction.HUMAN;
+	//	EnemiesInBattle.AddRange (GameObject.FindGameObjectsWithTag ("Enemy"));
+	//	HerosInBattle.AddRange (GameObject.FindGameObjectsWithTag ("Hero"));
+		currentTurn = new HandleTurn ();
 
 	}
 	
@@ -57,14 +61,15 @@ public class BattleStateMachine : MonoBehaviour {
 			}
 			break;
 		case (PerformAction.TAKEACTION):
-			GameObject perfomer = performList [0].attackerGameObject;
-			if (performList [0].attackerType == "Enemy") {
+			BaseVolleyer perfomer = performList [0].attackerGameObject;
+			/*if (performList [0].attackerType == "Enemy") {
 
 				performList [0].attackerGameObject.GetComponent<EnemyStateMachine> ().target = performList [0].targetGameObject;
 				performList [0].attackerGameObject.GetComponent<EnemyStateMachine> ().currentState = EnemyStateMachine.PerformAction.ACTION;
 			} else if (performList [0].attackerType == "Hero") {
 				// getFrom interface the target 
-			}
+				//getFrom interface the skill
+			}*/
 			battleStates = PerformAction.PERFORMACTION;
 			break;
 		case (PerformAction.PERFORMACTION):
