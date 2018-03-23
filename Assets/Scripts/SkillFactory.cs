@@ -10,8 +10,8 @@ public class SkillFactory {
 
 		pass.skillName = "Pass";
 		pass.type = SKILL_TYPE.Pass;
-		pass.sTarget = SkillTarget.TEAM;
-		addAllPosition (pass.posTarget);
+		pass.sTarget = SkillTargetType.FRIENDLY;
+		addAllPosition (pass);
 		//Have to come up whith the alteration of the pass
 		return pass;
 	}
@@ -22,8 +22,8 @@ public class SkillFactory {
 
 		skill.skillName = "Shot";
 		skill.type = SKILL_TYPE.Shot;
-		skill.sTarget = SkillTarget.ENEMY;
-		addAllPosition (skill.posTarget);
+		skill.sTarget = SkillTargetType.ENEMYLY;
+		addAllPosition (skill);
 		//Have to come up whith the alteration of the pass
 		return skill;
 	}
@@ -34,21 +34,21 @@ public class SkillFactory {
 
 		skill.skillName = "Serve";
 		skill.type = SKILL_TYPE.Serve;
-		skill.sTarget = SkillTarget.ENEMY;
-		addAllPosition (skill.posTarget);
+		skill.sTarget = SkillTargetType.ENEMYLY;
+		addAllPosition (skill);
 		//Have to come up whith the alteration of the pass
 		return skill;
 	}
 
 
-	void addAllPosition (List<POSITION> list) {
+	void addAllPosition (Skills list) {
 
-		list.Add(POSITION.BACK_L);
-		list.Add(POSITION.BACK_M);
-		list.Add(POSITION.BACK_R);
-		list.Add(POSITION.FRONT_L);
-		list.Add(POSITION.FRONT_M);
-		list.Add(POSITION.BACK_R);
+		list.posTarget.Add(POSITION.BACK_L);
+		list.posTarget.Add(POSITION.BACK_M);
+		list.posTarget.Add(POSITION.BACK_R);
+		list.posTarget.Add(POSITION.FRONT_L);
+		list.posTarget.Add(POSITION.FRONT_M);
+		list.posTarget.Add(POSITION.BACK_R);
 
 	}
 

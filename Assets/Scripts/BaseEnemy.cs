@@ -5,9 +5,15 @@ using UnityEngine;
 [System.Serializable]
 public class BaseEnemy : BaseVolleyer{
 
-	public BaseEnemy(string _name, ClassType _type, POSITION _pos) : base (_name, _type,  _pos) {
-		targetType = SkillTarget.ENEMY;
+	public BaseEnemy(string _name, ClassType _type, POSITION _pos, bool serv = false) : base (_name, _type,  _pos, serv) {
+		targetType = SkillTarget.TEAM2;
 	}
+
+	override public void init(string _name, ClassType _type, POSITION _pos, bool serv = false) {
+		base.init (_name, _type, _pos, serv);
+		targetType = SkillTarget.TEAM2;
+	}
+
 
 	public enum DIFFICULTY {
 		COMMON,

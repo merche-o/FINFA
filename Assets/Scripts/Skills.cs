@@ -15,22 +15,31 @@ public enum SKILL_TYPE {
 }
 
 public enum SkillTarget {
-	TEAM,
-	ENEMY
+	TEAM1,
+	TEAM2
+}
+
+public enum SkillTargetType {
+	FRIENDLY,
+	ENEMYLY
 }
 
 [Serializable]
 public class Skills : Button {
-	
+
 
 	public SKILL_TYPE type;
 	public string skillName;
 	public string desc;
-	public SkillTarget sTarget;
+	public SkillTargetType sTarget;
 	public List<POSITION> posTarget;
 	public List<Alterations> alterations;
 	//add image
 
+	public Skills() {
+		posTarget = new List<POSITION>();
+		alterations = new List<Alterations>();
+	}
 
 	public override void OnPointerClick (PointerEventData eventData)
 	{

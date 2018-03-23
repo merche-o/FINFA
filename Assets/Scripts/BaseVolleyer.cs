@@ -23,6 +23,8 @@ public class BaseVolleyer : MonoBehaviour {
 	public float baseMP;
 	public float currentMP;
 	public POSITION cur_pos;
+	public bool isServer;
+	public bool isActive;
 
 	public string description;
 	public ClassType type;
@@ -32,19 +34,30 @@ public class BaseVolleyer : MonoBehaviour {
 	public List<Alterations> currentAlterations;
 	public List<Alterations> permAlterations;
 	public List<Skills> moveList;
-	public GameObject gameObj;
+	//public GameObject gameObj;
 	public SkillTarget targetType;
 
-	public BaseVolleyer (string _name, ClassType _type, POSITION _pos) {
+	public BaseVolleyer (string _name, ClassType _type, POSITION _pos, bool serv = false) {
 		Vname = _name;
 		type = _type;
 		cur_pos = _pos;
+		isServer = serv;
+		moveList = new List<Skills>();
+
 		setBasicSkill ();
+	}
+	virtual public void init(string _name, ClassType _type, POSITION _pos, bool serv = false) {
+		Vname = _name;
+		type = _type;
+		cur_pos = _pos;
+		moveList = new List<Skills>();
+		isServer = serv;
+		setBasicSkill ();
+
 	}
 
 	void setBasicSkill() {
 		SkillFactory sFact = new SkillFactory ();
-
 		moveList.Add (sFact.createPassSkill());
 		moveList.Add (sFact.createServiceSkill());
 		moveList.Add (sFact.createShotSkill());
@@ -75,11 +88,13 @@ public class BaseVolleyer : MonoBehaviour {
 	}
 
 	bool isClickable (BattleStateMachine bsm) {
-		if (bsm.battleStates == BattleStateMachine.PerformAction.HUMAN && bsm.currentTurn.skill && bsm.currentTurn.skill.sTarget == targetType) {
+		if (bsm.battleStates == BattleStateMachine.PerformAction.HUMAN && bsm.currentTurn.skill) {
 		
-			foreach (POSITION pos in bsm.currentTurn.skill.posTarget) {
-				if (pos == cur_pos)
-					return true;
+			if ((bsm.currentTurn.skill.sTarget == SkillTargetType.FRIENDLY && this.targetType == bsm.currentTurn.attackerGameObject.targetType) || (bsm.currentTurn.skill.sTarget == SkillTargetType.ENEMYLY && bsm.currentTurn.attackerGameObject.targetType != this.targetType)) {
+				foreach (POSITION pos in bsm.currentTurn.skill.posTarget) {
+					if (pos == cur_pos)
+						return true;
+				}
 			}
 		}
 		return false;

@@ -26,7 +26,7 @@ public class EnemyStateMachine : BaseEnemy {
 	private bool actionStarted = false;
 	public GameObject target;
 
-	public EnemyStateMachine(string _name, ClassType _type, POSITION _pos) : base (_name, _type,  _pos) {
+	public EnemyStateMachine(string _name, ClassType _type, POSITION _pos, bool serv = false) : base (_name, _type,  _pos, serv) {
 	}
 	// Use this for initialization
 	void Start () {

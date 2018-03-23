@@ -5,9 +5,17 @@ using UnityEngine;
 [System.Serializable]
 public class BaseHero : BaseVolleyer{
 
-	public BaseHero(string _name, ClassType _type, POSITION _pos) : base ( _name,  _type, _pos) {
-		targetType = SkillTarget.TEAM;
+	public BaseHero(string _name, ClassType _type, POSITION _pos, bool serv = false) : base ( _name,  _type, _pos, serv) {
+		targetType = SkillTarget.TEAM1;
+
 	}
+
+	override public void init(string _name, ClassType _type, POSITION _pos, bool serv = false) {
+		base.init (_name, _type, _pos, serv);
+		targetType = SkillTarget.TEAM1;
+
+	}
+
 
 	override protected void OnMouseOver(){
 		base.OnMouseOver ();

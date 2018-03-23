@@ -18,8 +18,10 @@ public class HeroStateMachine : BaseHero {
 		ACTION,
 		DEAD
 	}
-	public HeroStateMachine(string _name, ClassType _type, POSITION _pos) : base (_name, _type,  _pos) {
+	public HeroStateMachine(string _name, ClassType _type, POSITION _pos, bool serv = false) : base (_name, _type,  _pos, serv) {
 	}
+
+
 	public PerformAction currentState;
 	private float currentCD = 0f;
 	private float maxCD = 2f;
