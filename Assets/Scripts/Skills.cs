@@ -55,7 +55,7 @@ public class Skills : Button {
 	public override void OnPointerEnter (PointerEventData eventData)
 	{
 		base.OnPointerEnter (eventData);
-		Debug.Log("Should display skills description");
+		Debug.Log("Should display " + skillName +" description");
 
 	}
 

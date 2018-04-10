@@ -23,15 +23,15 @@ public class BattleStateMachine : MonoBehaviour {
 		PERFORMACTION
 	};
 
-	public Transform HeroPrefab;
-	public Transform EnemyPrefab;
-
+	public GameObject HeroPrefab;
+	public GameObject EnemyPrefab;
+	public GameObject SkillFactory;
 	public HandleTurn currentTurn;
 	public PerformAction battleStates;
 	public List<HandleTurn> performList = new List<HandleTurn> ();
 
-	public List<Transform> HerosInBattle = new List<Transform> ();
-	public List<Transform> EnemiesInBattle = new List<Transform> ();
+	public List<GameObject> HerosInBattle = new List<GameObject> ();
+	public List<GameObject> EnemiesInBattle = new List<GameObject> ();
 
 	public enum HeroGUI {
 		ACTIVATE,
@@ -47,8 +47,8 @@ public class BattleStateMachine : MonoBehaviour {
 	void Start () {
 
 		battleStates = PerformAction.HUMAN;
-		HerosInBattle = new List<Transform> ();
-		EnemiesInBattle = new List<Transform> ();
+		HerosInBattle = new List<GameObject> ();
+		EnemiesInBattle = new List<GameObject> ();
 	//	EnemiesInBattle.AddRange (GameObject.FindGameObjectsWithTag ("Enemy"));
 	//	HerosInBattle.AddRange (GameObject.FindGameObjectsWithTag ("Hero"));
 		generateTestHeroTeam();
@@ -62,44 +62,44 @@ public class BattleStateMachine : MonoBehaviour {
 
 	void generateTestHeroTeam() {
 		
-		Transform HeroClone= (Transform)Instantiate (HeroPrefab, transform);
+		GameObject HeroClone= Instantiate (HeroPrefab, transform);
 		HeroClone.GetComponent<HeroStateMachine> ().init ("h1", ClassType.ATK, POSITION.FRONT_L);
 		HerosInBattle.Add(HeroClone);
-		Transform HeroClone1 = Instantiate (HeroPrefab, transform);
+		GameObject HeroClone1 = Instantiate (HeroPrefab, transform);
 		HeroClone1.GetComponent<HeroStateMachine> ().init ("h2", ClassType.ATK,POSITION.FRONT_M);
 		HerosInBattle.Add(HeroClone1);
-		Transform HeroClone2 = Instantiate (HeroPrefab, transform);
+		GameObject HeroClone2 = Instantiate (HeroPrefab, transform);
 		HeroClone2.GetComponent<HeroStateMachine> ().init ("h3", ClassType.ATK,POSITION.FRONT_R);
 		HerosInBattle.Add(HeroClone2);
-		Transform HeroClone3= Instantiate (HeroPrefab, transform);
+		GameObject HeroClone3= Instantiate (HeroPrefab, transform);
 		HeroClone3.GetComponent<HeroStateMachine> ().init ("h4", ClassType.DEF,POSITION.BACK_L);
 		HerosInBattle.Add(HeroClone3);
-		Transform HeroClone4= Instantiate (HeroPrefab, transform);
+		GameObject HeroClone4= Instantiate (HeroPrefab, transform);
 		HeroClone4.GetComponent<HeroStateMachine> ().init ("h5", ClassType.DEF,POSITION.BACK_M);
 		HerosInBattle.Add(HeroClone4);
-		Transform HeroClone5= Instantiate (HeroPrefab, transform);
+		GameObject HeroClone5= Instantiate (HeroPrefab, transform);
 		HeroClone5.GetComponent<HeroStateMachine> ().init ("h6", ClassType.DEF,POSITION.BACK_R, true);
 		HerosInBattle.Add(HeroClone5);
 	
 	}
 
 	void generateTestEnemyTeam() {
-		Transform EnemyClone= Instantiate (EnemyPrefab, transform);
+		GameObject EnemyClone= Instantiate (EnemyPrefab, transform);
 		EnemyClone.GetComponent<EnemyStateMachine> ().init ("e1", ClassType.ATK, POSITION.FRONT_L);
 		EnemiesInBattle.Add(EnemyClone);
-		Transform EnemyClone1= Instantiate (EnemyPrefab, transform);
+		GameObject EnemyClone1= Instantiate (EnemyPrefab, transform);
 		EnemyClone1.GetComponent<EnemyStateMachine> ().init ("e2", ClassType.ATK,POSITION.FRONT_M);
 		EnemiesInBattle.Add(EnemyClone1);
-		Transform EnemyClone2 = Instantiate (EnemyPrefab, transform);
-		EnemyClone.GetComponent<EnemyStateMachine> ().init ("e3", ClassType.ATK,POSITION.FRONT_R);
+		GameObject EnemyClone2 = Instantiate (EnemyPrefab, transform);
+		EnemyClone2.GetComponent<EnemyStateMachine> ().init ("e3", ClassType.ATK,POSITION.FRONT_R);
 		EnemiesInBattle.Add(EnemyClone2);
-		Transform EnemyClone3= Instantiate (EnemyPrefab, transform);
-		EnemyClone.GetComponent<EnemyStateMachine> ().init ("e4", ClassType.DEF,POSITION.BACK_L);
+		GameObject EnemyClone3= Instantiate (EnemyPrefab, transform);
+		EnemyClone3.GetComponent<EnemyStateMachine> ().init ("e4", ClassType.DEF,POSITION.BACK_L);
 		EnemiesInBattle.Add(EnemyClone3);
-		Transform EnemyClone4 = Instantiate (EnemyPrefab, transform);
+		GameObject EnemyClone4 = Instantiate (EnemyPrefab, transform);
 		EnemyClone4.GetComponent<EnemyStateMachine> ().init ("e5", ClassType.DEF,POSITION.BACK_M);
 		EnemiesInBattle.Add(EnemyClone4);
-		Transform EnemyClone5 = Instantiate (EnemyPrefab, transform);
+		GameObject EnemyClone5 = Instantiate (EnemyPrefab, transform);
 		EnemyClone5.GetComponent<EnemyStateMachine> ().init ("e6", ClassType.DEF,POSITION.BACK_R);
 		EnemiesInBattle.Add(EnemyClone5);
 	}
@@ -142,7 +142,7 @@ public class BattleStateMachine : MonoBehaviour {
 	}
 
 	public void launchSkill() {
-		Debug.Log("Launch skill !");
+		Debug.Log("Launch " + currentTurn.skill.skillName);
 
 	}
 
@@ -167,9 +167,8 @@ public class BattleStateMachine : MonoBehaviour {
 	void setServer() {
 		HandlePanels panel = GameObject.Find ("Canvas").GetComponent<HandlePanels>();
 
-		foreach (Transform h in HerosInBattle) {
+		foreach (GameObject h in HerosInBattle) {
 			if (h.GetComponent<HeroStateMachine> ().isServer == true) {
-				Debug.Log("Server Found !");
 
 				currentTurn.attackerGameObject = h.GetComponent<HeroStateMachine>();
 				currentTurn.attackerName = currentTurn.attackerGameObject.Vname;
@@ -180,9 +179,8 @@ public class BattleStateMachine : MonoBehaviour {
 		}
 
 
-		foreach (Transform h in EnemiesInBattle) {
+		foreach (GameObject h in EnemiesInBattle) {
 			if (h.GetComponent<HeroStateMachine> ().isServer == true) {
-				Debug.Log("Server Found !");
 
 				currentTurn.attackerGameObject = h.GetComponent<HeroStateMachine>();
 				currentTurn.attackerName = currentTurn.attackerGameObject.Vname;

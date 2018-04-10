@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillFactory {
+public class SkillFactory : MonoBehaviour {
 
 	public Skills createPassSkill() {
+
 
 		Skills pass = new Skills ();
 
@@ -39,6 +40,8 @@ public class SkillFactory {
 		//Have to come up whith the alteration of the pass
 		return skill;
 	}
+
+
 
 
 	void addAllPosition (Skills list) {

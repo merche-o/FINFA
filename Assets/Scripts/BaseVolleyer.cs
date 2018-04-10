@@ -57,10 +57,11 @@ public class BaseVolleyer : MonoBehaviour {
 	}
 
 	void setBasicSkill() {
-		SkillFactory sFact = new SkillFactory ();
-		moveList.Add (sFact.createPassSkill());
-		moveList.Add (sFact.createServiceSkill());
-		moveList.Add (sFact.createShotSkill());
+		BattleStateMachine bsm = GameObject.Find ("BattleManager").GetComponent<BattleStateMachine>();
+
+		moveList.Add (bsm.SkillFactory.GetComponent<SkillFactory> ().createPassSkill());
+		moveList.Add (bsm.SkillFactory.GetComponent<SkillFactory> ().createServiceSkill());
+		moveList.Add (bsm.SkillFactory.GetComponent<SkillFactory> ().createShotSkill());
 	}
 
 	protected virtual void OnMouseOver(){
